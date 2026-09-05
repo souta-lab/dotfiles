@@ -1,0 +1,205 @@
+# ──────────────────────────────────────
+# Sway Config - Stylish Minimal
+# ──────────────────────────────────────
+
+# Modキー (Winキー)
+set $mod Mod4
+
+# 環境変数
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
+# フォント
+font pango:Noto Sans CJK JP, FontAwesome 6 Free, Noto Sans Symbols, NotoSans Nerd Font, Noto Color Emoji 10
+
+# ── 出力設定 ──
+output * bg ~/Pictures/wallpaper.png fill
+
+# ── 入力設定 ──
+input type:keyboard {
+    xkb_layout "jp"
+    xkb_options ctrl:nocaps
+}
+
+input type:touchpad {
+    tap enabled
+    natural_scroll enabled
+    dwt enabled
+}
+
+# ── 外観 ──
+# ウィンドウ枠
+default_border none
+default_floating_border none
+gaps inner 8
+gaps outer 4
+
+# カーソルテーマ
+seat seat0 xcursor_theme scm-zutomayo-24d148e7 64
+
+# クラスベースの枠色
+client.focused          #89b4fa #89b4fa #1e1e2e #89b4fa #89b4fa
+client.focused_inactive #45475a #45475a #cdd6f4 #45475a #45475a
+client.unfocused        #313244 #313244 #6c7086 #313244 #313244
+
+# タイトルバー非表示
+for_window [class=".*"] titlebar_border 0
+
+# ── SwayFX: 目玉設定 ──
+# 角丸 (smart: ギャップがある時だけ丸める)
+corner_radius 12
+smart_corner_radius enable
+
+# シャドウ
+shadows enable
+shadows_on_csd enable
+shadow_blur_radius 20
+shadow_color #0000007F
+
+# ブラー
+blur enable
+blur_xray disable
+blur_passes 2
+blur_radius 5
+
+# 非フォーカスを少し暗く
+default_dim_inactive 0.08
+
+# 開閉アニメーション (ms)
+animation_duration_ms 200
+
+# タイトルバーとコンテンツの境界線を消す
+titlebar_separator disable
+
+# waybar / wofi / mako にエフェクト
+layer_effects "waybar" {
+    blur enable;
+    blur_ignore_transparent enable;
+    shadows enable;
+    corner_radius 12;
+}
+layer_effects "wofi" {
+    blur enable;
+    blur_ignore_transparent enable;
+    shadows enable;
+    corner_radius 12;
+}
+layer_effects "notifications" {
+    blur enable;
+    blur_ignore_transparent enable;
+    shadows enable;
+    corner_radius 12;
+}
+
+# フローティングウィンドウはシャドウ強め
+for_window [floating] shadows enable
+
+# フローティングルール
+for_window [app_id="pavucontrol"] floating enable
+for_window [app_id="firefox" title="^Library$"] floating enable
+for_window [app_id=".blueman-manager-wrapped"] floating enable
+
+# ── 起動時 ──
+exec fcitx5 -d
+exec mako
+# exec kanshi  # disabled: single output, sway auto-handles
+# 時間経過ロック無効（手動ロック: Mod+Escape）
+exec swayidle -w \
+    before-sleep 'swaylock -f -c 1e1e2e'
+
+# ── キーバインド ──
+# 起動
+bindsym $mod+Return exec ghostty
+bindsym $mod+d exec wofi --show drun
+bindsym $mod+Escape exec swaylock -f -c 1e1e2e
+
+# ウィンドウ操作
+bindsym $mod+Shift+q kill
+bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+# フォーカス移動
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# ウィンドウ移動
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# ワークスペース
+set $ws1 " 1 "
+set $ws2 " 2 "
+set $ws3 " 3 "
+set $ws4 " 4 "
+set $ws5 " 5 "
+set $ws6 " 6 "
+set $ws7 " 7 "
+set $ws8 " 8 "
+set $ws9 " 9 "
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+
+# レイアウト切替
+bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+e layout toggle split
+
+# スクリーンショット（ファイル保存＋クリップボードにコピー）
+bindsym Print exec sh -c 'slurp | grim -g - - | tee ~/Pictures/screenshot_$(date +%Y%m%d_%H%M%S).png | wl-copy -t image/png'
+bindsym Shift+Print exec sh -c 'grim - | tee ~/Pictures/screenshot_$(date +%Y%m%d_%H%M%S).png | wl-copy -t image/png'
+
+# 明るさ/音量
+bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# リサイズモード
+mode "resize" {
+    bindsym h resize shrink width 10px
+    bindsym j resize grow height 10px
+    bindsym k resize shrink height 10px
+    bindsym l resize grow width 10px
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# 再読み込み / 終了
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+e exec swaymsg exit
+
+# ステータスバー
+bar {
+    swaybar_command waybar
+}
+
+# ── 日本語入力（fcitx5）──
+
+set $fcitx XMODIFIERS=@im=fcitx
+set $fcitx GTK_IM_MODULE=fcitx
+set $fcitx QT_IM_MODULE=fcitx

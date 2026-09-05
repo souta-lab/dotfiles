@@ -1,0 +1,19 @@
+# Ghostty config
+# https://ghostty.org/docs/config
+
+theme = Catppuccin Mocha
+
+font-family = Noto Sans Mono CJK JP
+font-size = 14
+
+# SwayFXのブラーを活かす (見た目のみ)
+background-opacity = 0.92
+background-blur = true
+
+# Wayland / sway 向け
+window-decoration = none
+confirm-close-surface = false
+clipboard-read = allow
+clipboard-write = allow
+mouse-hide-while-typing = true
+scrollback-limit = 10000

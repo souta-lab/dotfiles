@@ -1,0 +1,18 @@
+# Mako Notifications - Catppuccin Mocha
+font=Noto Sans CJK JP 10
+
+background-color=#1e1e2e
+text-color=#cdd6f4
+border-color=#89b4fa
+border-size=2
+border-radius=8
+
+padding=10
+margin=8
+max-icon-size=48
+
+default-timeout=5000
+ignore-timeout=1
+
+[grouped=true]
+format=<b>%s</b>\n%b

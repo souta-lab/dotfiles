@@ -1,0 +1,150 @@
+/* ──────────────────────────────────────
+   Waybar - Catppuccin Mocha Style
+   ────────────────────────────────────── */
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "NotoSans Nerd Font", "Noto Sans CJK JP", "Font Awesome 6 Free";
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: rgba(30, 30, 46, 0.9);
+    color: #cdd6f4;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+#workspaces {
+    margin: 4px 4px 4px 8px;
+    border-radius: 8px;
+    background-color: #181825;
+}
+
+#workspaces button {
+    padding: 4px 10px;
+    color: #cdd6f4;
+    border-radius: 8px;
+    margin: 2px;
+}
+
+#workspaces button:hover {
+    background-color: #313244;
+}
+
+#workspaces button.focused {
+    background-color: #89b4fa;
+    color: #1e1e2e;
+}
+
+#workspaces button.urgent {
+    background-color: #f38ba8;
+    color: #1e1e2e;
+}
+
+#mode {
+    padding: 4px 12px;
+    margin: 4px;
+    background-color: #f9e2af;
+    color: #1e1e2e;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#pulseaudio,
+#network,
+#tray {
+    padding: 0 10px;
+    margin: 4px 2px;
+    border-radius: 8px;
+    background-color: #181825;
+}
+
+#clock {
+    background-color: #89b4fa;
+    color: #1e1e2e;
+    font-weight: bold;
+}
+
+#battery {
+    background-color: #a6e3a1;
+    color: #1e1e2e;
+}
+
+#battery.warning {
+    background-color: #f9e2af;
+}
+
+#battery.critical {
+    background-color: #f38ba8;
+    animation: blink 0.5s linear infinite;
+}
+
+@keyframes blink {
+    to { background-color: #1e1e2e; }
+}
+
+#cpu {
+    background-color: #cba6f7;
+    color: #1e1e2e;
+}
+
+#memory {
+    background-color: #f5c2e7;
+    color: #1e1e2e;
+}
+
+#disk {
+    background-color: #94e2d5;
+    color: #1e1e2e;
+}
+
+#temperature {
+    background-color: #fab387;
+    color: #1e1e2e;
+}
+
+#temperature.critical {
+    background-color: #f38ba8;
+}
+
+#pulseaudio {
+    background-color: #74c7ec;
+    color: #1e1e2e;
+}
+
+#pulseaudio.muted {
+    background-color: #45475a;
+    color: #cdd6f4;
+}
+
+#network {
+    background-color: #f9e2af;
+    color: #1e1e2e;
+}
+
+#network.disconnected {
+    background-color: #45475a;
+}
+
+#tray {
+    background-color: #313244;
+    padding: 0 8px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: #f38ba8;
+}
